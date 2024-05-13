@@ -1,0 +1,4 @@
+(executable
+ (public_name CH3)
+ (name main)
+ (libraries answers))

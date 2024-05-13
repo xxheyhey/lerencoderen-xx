@@ -1,0 +1,31 @@
+
+dpkg:
+dpkg is een low-level package manager. .deb (debian based) files kunnen hiermee geïnstalleerd worden.
+een command is bv: sudo dpkg -i discord.deb
+de "-i" staat voor "install".
+met dpkg worden er geen dependencies geïnstalleerd die nodig zijn voor de package die je wil installeren.
+
+apt:
+apt is een high-level package manager. het installeert packages en zijn dependencies.
+apt haalt packages uit repositories en vereist geen .deb file voor installatie.
+
+repository:
+een storage location op een server met een collectie van packages die geïnstalleerd kunnen worden.
+
+sudo apt remove verwijdert de user data van de package die je verwijdert niet.
+sudo apt purge verwijdert wel alles.
+
+sudo apt list --installed geeft alle installed packages weer.
+sudo apt list --installed | grep ^"zoekterm" laat je zoeken in die lijst.
+
+snap (snapd) is een package "store". aan de snapd store kunnen gemakkelijk en snel nieuwe packages worden toegevoegd t.o.v. een repository waarbij het langer kan duren.
+
+git:
+met git kan je packages/repositories van github installeren/verkrijgen.
+bv:
+git clone https://github.com/voorbeelduser/voorbeeldapp
+dit clonet een github repository naar je huidige directory. hierdoor kan je de bestanden in de github repository (github is op zichzelf al een repository) die je hebt geclonet gebruiken.
+
+bij een python programma kun je hierna met pip de requirements installeren met:
+pip3 install -r requirements.txt
+ 

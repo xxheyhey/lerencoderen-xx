@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>First website</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <h1>Nice one</h1>
+
+    <p>
+        <a
+            href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure#planning_a_simple_website">
+            This part (<cite>Planning a simple website</cite>)</a>
+        of an MDN article is really nice to reference if you want to think
+        about the structure of a website before building one.
+    </p>
+
+    <p class="editor-note">This is a test editor-note</p>
+
+    <p>This is a list:</p>
+    <ul>
+        <li>Big <strong>Bro</strong></li>
+        <li>Medium bro</li>
+        <li>Small bro</li>
+    </ul>
+
+    <p>This is a link to <a href="https://github.com/nvim-lua/kickstart.nvim">kickstart.nvim</a>
+    </p>
+
+    <h2 id="subheader1">This is a nice subheader with an id to refer to in hyperlinks</h2>
+
+    <p>And this is a showcase picture of the Catppuccin theme (used in Neovim):</p>
+    <img src="https://user-images.githubusercontent.com/56817415/213472445-091e54fb-091f-4448-a631-fa6b2ba7d8a5.png"
+        alt="Catppuccin color theme showcase" height="600" />
+
+    <p>This is officialy &quot;a quote&quot;. Typing &quot;&amp;&quot; is not particularly nice in HTML.</p>
+
+    <p>This is a list of so called &quot;descriptions&quot;:</p>
+    <dl>
+        <dt>Hoi</dt>
+        <dd>Hello in Dutch</dd>
+        <dt>Doei</dt>
+        <dd>Bye in Dutch</dd>
+        <dt>Gezellig</dt>
+        <dd>Untranslatable</dd>
+    </dl>
+
+    <p>The <mark>mark</mark> element highlights text between its tags.</p>
+
+    <button>This is a button without a function</button>
+
+    <a href="../test/index.html" title="Nice link m8">
+        <h2>This header is a hyperlink because it is wrapped in anchor tags</h2>
+    </a>
+
+    <p> <a href="#subheader1">This</a> is a hyperlink to the subheader above</p>
+
+    <a href="mailto:nowhere@mozilla.org">Random mail address</a>
+
+    <h2>ASCII table</h2>
+    <!-- the alt attribute of an image is used as an alternative method to describe the image-->
+    <img src="images/ASCII-Table.png" alt="ASCII Table" height="400" />
+
+    <p>The following is a block quote with an
+        <a href="https://example.com">
+            <cite>example site</cite></a>
+        as the source:
+    </p>
+    <blockquote cite="https://example.com">
+        <p>This is a block quote with a random example link attached as the source</p>
+    </blockquote>
+
+    <p> Now I showcase <q>an inline quotation.</q></p>
+
+    <p> The following is an address, made with the <code>&lt;address&gt;</code> element.
+    <address>Vic ten Bokum, Tilburg, Nederland</address>
+
+    <p>Time of writing this: <time datetime="2024-02-12T14:18">2 februari 2024, 14:18</time></p>
+
+    <figure>
+        <img src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg"
+            alt="A skeleton of a dinosaur" width="200" height="171">
+        <figcaption>A skeleton of a T-Rex! :O</figcaption>
+    </figure>
+
+</body>
+
+</html>

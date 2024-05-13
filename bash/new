@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+user=$(whoami)
+datum=$(date)
+
+echo "Wat is je naam?"
+read name
+
+echo "Dankje! En je leeftijd?"
+read leeftijd
+
+echo "hey $name"
+sleep 1
+echo "Jij bent $leeftijd jaar oud!"
+sleep 1
+echo "Je bent ingelogd als $user"
+sleep 1
+echo "Dit is de tijd en datum: $datum"
+sleep 1
+echo "doei $name"
