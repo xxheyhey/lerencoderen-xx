@@ -346,7 +346,7 @@ let is_bst tree =
 (* quadrant poly *)
 let sign x = if x < 0 then `Neg else if x > 0 then `Pos else `Zero
 
-let quadrant (x, y) =
+let quadrant' (x, y) =
   match (sign x, sign y) with
   | `Pos, `Pos -> Some `I
   | `Neg, `Pos -> Some `II
@@ -355,7 +355,7 @@ let quadrant (x, y) =
   | _ -> None
 
 (* quadrant when *)
-let quadrant_when = function
+let quadrant_when' = function
   | x, y when x > 0 && y > 0 -> Some `I
   | x, y when x < 0 && y > 0 -> Some `II
   | x, y when x < 0 && y < 0 -> Some `III
