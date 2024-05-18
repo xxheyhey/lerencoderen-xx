@@ -22,11 +22,7 @@ let () = assert (product [ 1; 2; 3; 4; 5 ] = 120)
 (* patterns *)
 let starts_with_bigred lst =
   match lst with
-  | h :: _ ->
-      if h = "bigred" then
-        true
-      else
-        false
+  | h :: _ -> if h = "bigred" then true else false
   | _ -> false
 
 (* Better answer: *)
@@ -42,10 +38,7 @@ let has_two_or_four_elements lst_in =
     | _ :: t -> 1 + get_length t
   in
   let length = get_length lst_in in
-  if length = 2 || length = 4 then
-    true
-  else
-    false
+  if length = 2 || length = 4 then true else false
 
 (* Better answer: *)
 let has_two_or_four_elements' lst =
@@ -62,11 +55,7 @@ let first_two_elements_are_equal lst =
 (* library *)
 
 (* library:fifth *)
-let fifth (lst : int list) =
-  if List.length lst < 5 then
-    0
-  else
-    List.nth lst 4
+let fifth (lst : int list) = if List.length lst < 5 then 0 else List.nth lst 4
 
 (* library:sort *)
 let sort (lst : int list) = List.rev (List.sort Stdlib.compare lst)
@@ -112,11 +101,7 @@ let take_tr n lst = take_aux n lst []
 (** [from i j l] is the list containing the integers from [i] to [j],
     inclusive, followed by the list [l].
     Example:  [from 1 3 [0] = [1; 2; 3; 0]] *)
-let rec from i j l =
-  if i > j then
-    l
-  else
-    from i (j - 1) (j :: l)
+let rec from i j l = if i > j then l else from i (j - 1) (j :: l)
 
 (** [i -- j] is the list containing the integers from [i] to [j], inclusive. *)
 let ( -- ) i j = from i j []
@@ -125,12 +110,7 @@ let ( -- ) i j = from i j []
 let rec is_unimodal_helper x = function
   | [] -> true
   | h :: t ->
-      if t = [] then
-        true
-      else if h > x then
-        is_unimodal_helper h t
-      else
-        false
+    if t = [] then true else if h > x then is_unimodal_helper h t else false
 
 let is_unimodal lst = is_unimodal_helper 0 lst
 
@@ -146,10 +126,7 @@ let rec is_mon_dec = function
 let rec is_mon_inc_then_dec = function
   | [] | [ _ ] -> true
   | h1 :: (h2 :: _ as t) as lst ->
-      if h1 <= h2 then
-        is_mon_inc_then_dec t
-      else
-        is_mon_dec lst
+    if h1 <= h2 then is_mon_inc_then_dec t else is_mon_dec lst
 
 let is_unimodal' lst = is_mon_inc_then_dec lst
 
@@ -157,10 +134,10 @@ let is_unimodal' lst = is_mon_inc_then_dec lst
 let rec powerset_aux acc = function
   | [] -> acc
   | h :: t ->
-      let subsets_with_h = List.map (fun set -> h :: set) acc in
-      let subsets_without_h = acc in
-      let acc' = subsets_with_h @ subsets_without_h in
-      powerset_aux acc' t
+    let subsets_with_h = List.map (fun set -> h :: set) acc in
+    let subsets_without_h = acc in
+    let acc' = subsets_with_h @ subsets_without_h in
+    powerset_aux acc' t
 
 let powerset lst = powerset_aux [ [] ] lst
 
@@ -168,15 +145,15 @@ let powerset lst = powerset_aux [ [] ] lst
 let rec powerset' = function
   | [] -> [ [] ]
   | h :: t ->
-      let p = powerset' t in
-      List.map (List.cons h) p @ p
+    let p = powerset' t in
+    List.map (List.cons h) p @ p
 
 (* print int list rec *)
 let rec print_int_list = function
   | [] -> ()
   | h :: t ->
-      h |> string_of_int |> print_endline;
-      print_int_list t
+    h |> string_of_int |> print_endline;
+    print_int_list t
 
 (* print int list rec *)
 let print_int_list' lst =
@@ -212,15 +189,10 @@ let safe_tl = function
 let rec max_hp = function
   | [] -> None
   | h :: t -> begin
-      match max_hp t with
-      | None -> Some h
-      | Some m ->
-          Some
-            (if h.hp >= m.hp then
-               h
-             else
-               m)
-    end
+    match max_hp t with
+    | None -> Some h
+    | Some m -> Some (if h.hp >= m.hp then h else m)
+  end
 
 (* date before *)
 type date = int * int * int
@@ -228,14 +200,14 @@ type date = int * int * int
 let is_before (date1 : date) (date2 : date) =
   match (date1, date2) with
   | (year1, month1, day1), (year2, month2, day2) ->
-      if year1 < year2 then
-        true
-      else if month1 < month2 then
-        true
-      else if day1 < day2 then
-        true
-      else
-        false
+    if year1 < year2 then
+      true
+    else if month1 < month2 then
+      true
+    else if day1 < day2 then
+      true
+    else
+      false
 
 (* Better answer: *)
 let is_before' (date1 : date) (date2 : date) =
@@ -247,13 +219,9 @@ let is_before' (date1 : date) (date2 : date) =
 let rec earliest = function
   | [] -> None
   | date1 :: t -> (
-      match earliest t with
-      | None -> Some date1
-      | Some date ->
-          if is_before date1 date then
-            Some date1
-          else
-            Some date)
+    match earliest t with
+    | None -> Some date1
+    | Some date -> if is_before date1 date then Some date1 else Some date)
 
 (* Test dates: *)
 let date1 = (2013, 2, 1)
@@ -272,11 +240,7 @@ let insert k v lst = (k, v) :: lst
     value [v]; and is [None] if [lst] does not bind [k]. *)
 let rec lookup k = function
   | [] -> None
-  | (k', v) :: t ->
-      if k = k' then
-        Some v
-      else
-        lookup k t
+  | (k', v) :: t -> if k = k' then Some v else lookup k t
 
 let assoc_list = insert 1 "one" (insert 2 "two" (insert 3 "three" []))
 let lookup2 = lookup 2 assoc_list
@@ -299,13 +263,7 @@ let sos = { rank = Number 7; suit = Spades }
 type quad = I | II | III | IV
 type sign = Neg | Zero | Pos
 
-let sign (x : int) : sign =
-  if x < 0 then
-    Neg
-  else if x > 0 then
-    Pos
-  else
-    Zero
+let sign (x : int) : sign = if x < 0 then Neg else if x > 0 then Pos else Zero
 
 let quadrant : int * int -> quad option =
  fun (x, y) ->
@@ -335,7 +293,7 @@ let rec same_shape tree1 tree2 =
   match (tree1, tree2) with
   | Leaf, Leaf -> true
   | Node (_, left1, right1), Node (_, left2, right2) ->
-      same_shape left1 left2 && same_shape right1 right2
+    same_shape left1 left2 && same_shape right1 right2
   | _ -> false
 
 (* list max exn *)
@@ -371,27 +329,36 @@ type 'a tree_type = Empty | No_BST | BST of 'a * 'a
 let rec is_bst_helper : 'a tree -> 'a tree_type = function
   | Leaf -> Empty
   | Node (node, left, right) -> begin
-      match (is_bst_helper left, is_bst_helper right) with
-      | Empty, Empty -> BST (node, node)
-      | No_BST, _ | _, No_BST -> No_BST
-      | Empty, BST (min, max) ->
-          if min > node then
-            BST (node, max)
-          else
-            No_BST
-      | BST (min, max), Empty ->
-          if max < node then
-            BST (min, node)
-          else
-            No_BST
-      | BST (lmin, lmax), BST (rmin, max2) ->
-          if lmax < node && rmin > node then
-            BST (lmin, max2)
-          else
-            No_BST
-    end
+    match (is_bst_helper left, is_bst_helper right) with
+    | Empty, Empty -> BST (node, node)
+    | No_BST, _ | _, No_BST -> No_BST
+    | Empty, BST (min, max) -> if min > node then BST (node, max) else No_BST
+    | BST (min, max), Empty -> if max < node then BST (min, node) else No_BST
+    | BST (lmin, lmax), BST (rmin, max2) ->
+      if lmax < node && rmin > node then BST (lmin, max2) else No_BST
+  end
 
 let is_bst tree =
   match is_bst_helper tree with
   | No_BST -> false
   | _ -> true
+
+(* quadrant poly *)
+let sign x = if x < 0 then `Neg else if x > 0 then `Pos else `Zero
+
+let quadrant (x, y) =
+  match (sign x, sign y) with
+  | `Pos, `Pos -> Some `I
+  | `Neg, `Pos -> Some `II
+  | `Neg, `Neg -> Some `III
+  | `Pos, `Neg -> Some `IV
+  | _ -> None
+
+(* quadrant when *)
+let quadrant_when = function
+  | x, y when x > 0 && y > 0 -> Some `I
+  | x, y when x < 0 && y > 0 -> Some `II
+  | x, y when x < 0 && y < 0 -> Some `III
+  | x, y when x > 0 && y < 0 -> Some `IV
+  | _ -> None
+
