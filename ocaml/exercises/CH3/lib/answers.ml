@@ -354,11 +354,9 @@ let quadrant' (x, y) =
   | `Pos, `Neg -> Some `IV
   | _ -> None
 
-(* quadrant when *)
 let quadrant_when' = function
   | x, y when x > 0 && y > 0 -> Some `I
   | x, y when x < 0 && y > 0 -> Some `II
   | x, y when x < 0 && y < 0 -> Some `III
   | x, y when x > 0 && y < 0 -> Some `IV
   | _ -> None
-
