@@ -110,27 +110,55 @@ let add_matrices = List.map2 (fun row1 row2 -> add_row_vectors row1 row2)
 let add_matrices' = List.map2 add_row_vectors
 
 (* matrix multiply *)
+
+(* Test matrices and vectors *)
+let matrix1 = [ [ 1; 2; 3 ]; [ 4; 5; 6 ]; [ 7; 8; 9 ] ]
+let matrix2 = [ [ 10; 20; 30 ]; [ 40; 50; 60 ]; [ 70; 80; 90 ] ]
+let vector1 = [ 5; 5; 5 ]
+
 let rec get_col n = function
   | [] -> []
-  | row :: rows -> List.nth row n :: get_col n rows
+  | row :: rows ->
+    if n >= List.length row then
+      failwith "n is out of bounds"
+    else
+      List.nth row n :: get_col n rows
 
 let transpose matrix =
   let rec transpose_aux i matrix' =
     match matrix' with
     | [] -> []
-    | row :: rows ->
+    | row :: _ ->
       if i >= List.length row then
         []
       else
-        get_col i matrix' :: transpose_aux (i + 1) rows
+        get_col i matrix' :: transpose_aux (i + 1) matrix'
   in
   transpose_aux 0 matrix
 
 let multiply_row_vectors = List.map2 ( * )
+let dot row1 row2 = List.fold_left ( + ) 0 (multiply_row_vectors row1 row2)
 
-(* NOT DONE YET, NEED TO MAKE DOT FUNCTION *)
-let rec multiply_matrices matrix1 matrix2 =
-  match (matrix1, transpose matrix2) with
-  | row_m1 :: rows_m1, row_m2 :: rows_m2 ->
-    multiply_row_vectors row_m1 row_m2 :: multiply_matrices rows_m1 rows_m2
-  | _ -> failwith "arguments are not two matrices"
+let multiply_vector_with_matrix vector matrix =
+  let rec aux_fun vector' matrix' i =
+    if i >= List.length matrix' then
+      []
+    else
+      dot vector' (get_col i matrix') :: aux_fun vector' matrix' (i + 1)
+  in
+  aux_fun vector matrix 0
+
+let multiply_matrices matrix1 matrix2 =
+  let rec multiply_matrices_aux matrix1' matrix2_transposed acc =
+    match (matrix1', matrix2_transposed) with
+    | row_m1 :: rest_m1, m2 -> begin
+      match m2 with
+      | [] -> multiply_matrices_aux rest_m1 matrix2_transposed acc
+      | row_m2 :: rest_m2 ->
+        multiply_matrices_aux matrix1' rest_m2 (acc @ [ dot row_m1 row_m2 ])
+    end
+    | [], _ -> acc
+  in
+
+  let matrix2_transposed' = transpose matrix2 in
+  multiply_matrices_aux matrix1 matrix2_transposed' []
