@@ -139,26 +139,36 @@ let transpose matrix =
 let multiply_row_vectors = List.map2 ( * )
 let dot row1 row2 = List.fold_left ( + ) 0 (multiply_row_vectors row1 row2)
 
-let multiply_vector_with_matrix vector matrix =
-  let rec aux_fun vector' matrix' i =
-    if i >= List.length matrix' then
-      []
-    else
-      dot vector' (get_col i matrix') :: aux_fun vector' matrix' (i + 1)
-  in
-  aux_fun vector matrix 0
-
 let multiply_matrices matrix1 matrix2 =
-  let rec multiply_matrices_aux matrix1' matrix2_transposed acc =
+  let rec multiply_matrices_aux matrix1' matrix2_transposed acc_row acc =
     match (matrix1', matrix2_transposed) with
     | row_m1 :: rest_m1, m2 -> begin
       match m2 with
-      | [] -> multiply_matrices_aux rest_m1 matrix2_transposed acc
+      | [] ->
+        multiply_matrices_aux rest_m1 (transpose matrix2) [] (acc_row :: acc)
       | row_m2 :: rest_m2 ->
-        multiply_matrices_aux matrix1' rest_m2 (acc @ [ dot row_m1 row_m2 ])
+        multiply_matrices_aux matrix1' rest_m2
+          (acc_row @ [ dot row_m1 row_m2 ])
+          acc
     end
-    | [], _ -> acc
+    | [], _ -> List.rev acc
   in
+  multiply_matrices_aux matrix1 (transpose matrix2) [] []
 
-  let matrix2_transposed' = transpose matrix2 in
-  multiply_matrices_aux matrix1 matrix2_transposed' []
+(* from answers *)
+let transpose' ls =
+  let rec transpose'' acc = function
+    | [] | [] :: _ -> List.rev acc
+    | ls -> transpose'' (List.map List.hd ls :: acc) (List.map List.tl ls)
+  in
+  transpose'' [] ls
+
+let dot' = List.fold_left2 (fun acc x y -> acc + (x * y)) 0
+
+let multiply_matrices' m1 m2 =
+  List.map (fun row -> List.map (dot' row) (transpose' m2)) m1
+
+(* another solution *)
+
+let inner matrix row = List.map (dot' row) (transpose' matrix)
+let multiply_matrices'' m1 m2 = List.map (inner m2) m1
